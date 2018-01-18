@@ -30,7 +30,7 @@ Passwords are also exceptionally susceptible to dictionary and brute force attac
 
 Therefore, with usability and security being a trade-off, organizations often prioritize security over usability. Hence, to bridge this gap between the two, a framework is required. A framework which can unite the two and allow a system to be secure as well as usable. In the next section, we look towards such a usable security framework.
 
-\section{Usability}
+\section{Usability: What is it?}
 
 Usability is a measure of the interactive user experience associated with a user interface, such as a website or software application. A user-friendly interface design is easy-to-learn, supports users' tasks and goals efficiently and effectively, and is satisfying and engaging to use.\\
 
@@ -169,9 +169,9 @@ common OSes with respect to the security required for smart grids, though this d
 appear to be considered as yet. Similarly, usability must be considered in the design phase as well. Individual components may be evaluated for usability. This may be considered as \textbf{Usable Security by Design.}
 
 
-\subsection{Methodology}
+\subsection{Deriving Usability}
 With respect to the smart grid, the asset we are trying to protect is the control and information flow of the grid. Therefore, being a critical infrastructure, their estimated value is evidently high.   
-\newline The countermeasure, in this case, is an authentication system. To move forward with the framework, 	we need to identify the elements of the authentication system. Generally, they contain: An interface, a database, an authentication protocol run, key/token management and encryption algorithms. All the elements of the system can be measured using suitable metrics to quantify their impact on the usability of the system. In table \ref{tab:security-usability-relation}, different properties or factors affecting security are listed. The third column contains these factors, the second column contains the criteria for usability, which also represent the requirements for usability in this case and the first column contains the properties and factors affecting usability. The table is arranged such that if the security factors are optimized, they either directly satisfy the usability factors(or properties) in the first column or they satisfy the usability criteria(in the second column) and transitively satisfying the usability factors(or properties). 
+\newline The countermeasure, in this case, is an authentication system. To move forward with the framework, we need to identify the elements of the authentication system. Generally, they contain: An interface, a database, an authentication protocol run, key/token management and encryption algorithms. All the elements of the system can be measured using suitable metrics to quantify their impact on the usability of the system. In table \ref{tab:security-usability-relation}, different properties or factors affecting security are listed. The third column contains these factors, the second column contains the criteria for usability, which also represent the requirements for usability in this case and the first column contains the properties and factors affecting usability. The table is arranged such that if the security factors are optimized, they either directly satisfy the usability factors(or properties) in the first column or they satisfy the usability criteria(in the second column) and transitively satisfying the usability factors(or properties). 
 
 
 \begin{center}
@@ -236,7 +236,7 @@ The usability framework, with the help of QUIM, breaks down usability factors in
 In the next step, those factors derived from the target system must be used as quantifiable values to measure the criteria specified in table \ref{tab:security-usability-relation}. If a criteria cannot be quantified, alternative criteria can be selected from the QUIM usability criteria. In any case, the prioritized factors must be quantified. In our example, accuracy is a measurable quantity of the system as well as the usability criteria used to determine the efficiency.\\
 Accordingly, the factors measured from the system must be used to quantify the usability criteria, which help measure the usability factors. 
 
-\subsection{Validation}
+\subsection{Validation of the framework}
 To demonstrate how this framework could be used, we use an example. Two different authentication systems were tested, a fingerprint matching system and a simple password system. The evaluation involved participants using both types of systems and then answering a questionnaire. To assess fingerprint matching, two approaches were used. Since there are several types of fingerprint matching algorithms, performance may vary. Therefore, the most common implementations found in real life were used. First, an optical scanner of fingerprints was evaluated. An optical scanner scans the fingerprint into an optical image and compares the image as is with a database of images. This process is slow and less secure, as images of fingerprints are stored unprotected in the database. The second kind was a capacitive scanner, where fingerprints are read using varying electric charges when a ridge comes in contact with the scanner. This change is charge is converted to digital data, which is then analysed to look for unique features. Data is stored digitally, though not necessarily encrypted. This form of storing data is still vulnerable but more secure than images. There were 30 participants whose fingerprints were added to a database of more than 1000 entries. The results of the capacitive scanner were found to be more optimal. They are shown below:
 
 \begin{center}
@@ -296,8 +296,23 @@ It can be seen from the comparison that biometric systems such as fingerprint re
 
 \subsection{Integration into Security Development Lifecycle}
 An important aspect of usability engineering is that usability must be considered early on in software product development lifecycle. Usability of a product or a system can be measured after its development but cannot be integrated thereafter. To ensure the usability of product is as required, it must be considered early on. Each product has a set of target users and their preferences must be considered before product design. \\
-Microsoft has developed a Security Development Lifecycle\cite{howard2006security}, which we shall use to define where and when to use the usability framework. This lifecycle was developed to produce more secure software, and is step towards security-by-design. The Security Development Lifecycle Process is divided into several stages. 
+Microsoft has developed a Security Development Lifecycle\cite{howard2006security}, which we shall use to define where and when to use the usability framework. This lifecycle was developed to produce more secure software, and is step towards security-by-design. The Security Development Lifecycle Process is divided into several phases which are further divided into stages:
+\begin{itemize}
+\item Training: Known as phase 0, where developers are informed about security basics and recent trends in security and privacy. In this phase, developers must obtain information about preferences from the target user group. This information contains preferences about kind of system which could be used, willingness to learn a new system, trustfulness in an existing system, comfort in using an existing system and resources they are willing to expend to achieve their goal. An example is how time they willing to spend to accomplish the task the security system is required to complete. The framework may be used to set specific goals. Additionally, certain usability factors may be given priority based on goals of the system, such as efficiency, i.e, the amount of resources utilized to achieve the goal of the system must be limited and hence must not cross a specified limit.
+
+\item Requirements: Based on user preferences, the developers can narrow down the possibilities of implementation. Preferences may not necessarily be unanimous, in which case the developers and users must come to an agreement for the most preferable options. Developers may brainstorm best available technology required for the narrow possibilities of implementation to meet the specified goal. Security requirements take precedence over usability requirements. Therefore, first the security goals can be used to filter the implementation possibilities followed by the usability goals.
+
+\item Design: The focus of this phase is threat modelling and attack surface analysis, hence it is in the best interest to focus on security goals in this phase. After analysing security, the model may be used to assess if the performance goals affecting usability are met, such as accuracy and task completion time.
+
+\item Implementation: Based on requirements and design method selected, the developers can engineer a system that is secure and usable. The team of engineers follow the conventional software development process including coding, testing and integration.  Steps are taken to remove security flaws. Security takes precedences over usability once more. 
+
+\item Verification: The system undergoes testing and the team conducts a "security push" that includes security code reviews targeting the finished version of the software. This is to ensure the final product meets the security goals and a deeper review of the system. A usability review may follow the security review to ensure the usability goals have been met.
+
+\item Release: This phase is intended to give the developer team and the organization the big picture of the security software and its ability to withstand attacks. If vulnerabilities are found, they need to be fixed. Usability aspects of the product may be beta tested by a user from outside of the team.
+
+\item Response: Any vulnerabilities found post release will be patched in the response phase. This is largely achieved by updates. Detection of vulnerabilities also help eliminate further vulnerabilities before they are discovered. Usability concerns may be reported, however cannot be improved without large scale replacements incurring high costs. The concerns may be taken into consideration for the next product cycle.
+\end{itemize} 
 
 \section{Conclusion}
-
+Critical infrastructures like power plants will always be targeted for attacks. Extensive security measures will be needed to protect the power plant from various kinds of attacks. In order to aid the operator in attack scenarios, the system is place should be usable. To assess usability of systems, a usability framework for security was derived. With the use of this framework, it is possible to compare multiple systems and determine if they are usable or not. This was demonstrated by comparing two systems used in authentication mechanisms, a password based system and a fingerprint matching system. It is important to note that this framework can applied subjective to the system and the mechanism. Different systems will have different values for the framework. The framework paves the way to \textit{usable security by design}. 
 

@@ -17,7 +17,7 @@ The availability of electric power is the primary goal of the power grids. As th
 
 Virtual Power Plant(VPP) is one such infrastructure. A VPP is a centralized system that aggregates various energy sources to meet the energy demand of a geographical area. It relies upon software to remotely control, optimize and dispatch energy from Distributed Energy resources(DERs). At the heart of every VPP is the Energy Management System(EMS). The EMS manages power flows in order to minimize the electricity generation costs and avoid loss of energy produced by generators based on renewable energy sources. The EMS consists of a set of software programs designed to control and monitor several aspects of the power plant such as generation levels, capacity, current and voltage levels, power fluctuations, supply-demand matching and so on. These software programs are automated and carry out operations based on pre-defined rules and functions. They are consistently monitored by an operator, known as VPP Operator. Therefore, a VPP is a system that employs software and networking tools making it susceptible to cyber attacks. There are several known ways to attack a power plant, network based attacks such as man-in-the-middle, Masquerading, Spoofing, Denial of service, Injection etc, software vulnerability based attacks, hardware based attacks and so on. Most of the known attacks have defined countermeasures which are in use to protect the power plant. Even with the presence of an extensive defense infrastructure, there may be new and unprecedented attacks on power plants, including those that exploit zero-day vulnerabilities. 
 \newline
-A virtual power plant under attack is expected to continue functioning normally, i.e, it must primarily meet the goal of energy supply to the customer end. In anticipation of such attacks, the system may be configured to reschedule, find replacement sources or even attempt to control the system to prevent its shutdown or damage. The operator may be requested to control the system in case of unprecedented events or cases where the operator's intervention and authorization are required. For example, consider a scenario when a power plant is under attack and its primary generation units are inaccessible. The VPP then attempts to find replacement units. However, in case of a large scale attack units in the neighbourhood may also be rendered inaccessible. Therefore, the VPP may have to look for units outside its allotted area which may require operator request and authorization. In such a case, the operator is required to access and operate the system. We assume there is an authentication mechanism in place that protects the system from unauthorized access, and therefore is the first interface the operator comes across. This authentication interface is vital since it prevents unauthorized personnel from accessing the system either in normal system state or when the system is under attack, which could be orchestrated by the unauthorized personnel themselves. The authentication mechanism should however be a usable mechanism, even under stress, to prevent the legitimate power plant operator from being locked out. A traditional username-password system in this case could potentially be a problem. The operator is required to recall and enter the information accurately in order to be granted access. In such a situation, the operator may find it difficult to recall a complex password and is more likely to make mistakes entering it and being denied access, which could lead to a catastrophe. 
+A virtual power plant under attack is expected to continue functioning normally, i.e, it must primarily meet the goal of energy supply to the customer end. In anticipation of such attacks, the system may be configured to reschedule, find replacement sources or even attempt to control the system to prevent its shutdown or damage. The operator may be requested to control the system in case of unprecedented events or cases where the operator's intervention or authorization are required. For example, consider a scenario when a power plant is under attack and its primary generation units are inaccessible. The VPP then attempts to find replacement units. However, in case of a large scale attack units in the neighbourhood may also be rendered inaccessible. Therefore, the VPP may have to look for units outside its allotted area which may require operator request and authorization. In such a case, the operator is required to access and operate the system. We assume there is an authentication mechanism in place that protects the system from unauthorized access, and therefore is the first interface the operator comes across. This authentication interface is vital since it prevents unauthorized personnel from accessing the system either in normal system state or when the system is under attack, which could be orchestrated by the unauthorized personnel themselves. The authentication mechanism should however be a usable mechanism, even under stress, to prevent the legitimate power plant operator from being locked out. A traditional username-password system in this case could potentially be a problem. The operator is required to recall and enter the information accurately in order to be granted access. In such a situation, the operator may find it difficult to recall a complex password and is more likely to make mistakes entering it and being denied access, which could lead to a catastrophe. 
 
 \smallskip
 
@@ -295,6 +295,83 @@ Interface Design and Memory Load were scored with the same method as for biometr
 Now that we have results of two different authentication systems, a comparison can be made to assess which is more usable of the two. Tables \ref{tab:result1} and \ref{tab:result2} can be compared now that they have normalized metrics, i.e, common metrics. Since the EER is only used in biometric cases, it will not be used for comparison. Password based systems have a 100\% accuracy and a high rating for "Interface Design", but as explained earlier, these values were expected. Accuracy of biometric system observed as 96.1\% is still formidable. In case of a false negative, the task completion time, being exceptionally low, compensates for the time lost. The key factors are Task Completion Time, Interface Design and Memory Load. The fingerprint matching system used was exceptionally fast at 1.8 seconds for a successful authentication, although this can be attributed to relatively low sample space and the user of a capacitive scanner. In contrast a password system took an average of 12.2 seconds. This may be due to complexity of passwords, typing speed and additional time required to enter the user identifier such as a username. Interface design were both scored above 4, with password systems higher due to its familiarity to users. Memory Load, being a very important focus, due to difficulty in remembering difficult passwords especially under stress, shows that password systems are not preferable at all. Fingerprint systems require no memory use and are very usable.\\
 It can be seen from the comparison that biometric systems such as fingerprint recognition and matching systems are accurate, faster, easy-to-use and are hence very usable. 
 
+\section{Example: Application}
+To describe the approach for usability-by-design, or in this case usable security-by-design, the use case of DER scheduling in Dynamic Virtual Power Plants was used. 
+
+\begin{figure}[h]
+
+\caption{UML diagram of rescheduling process.}
+\label{fig:uml_diag}
+\begin{sequencediagram}
+
+\def\unitfactor{0.5}
+\newthread{a}{VPP SP}
+\newinst[2]{b}{IED(all)}
+%\newinst[2]{c}{Metering}
+\newinst[2]{d}{DER}
+
+\begin{call}{b}{Req\_Markt()}{a}{Markt\_Info}
+\end{call}
+
+\begin{call}{b}{Req\_Agent\_List()}{a}{Agent\_Info}
+\end{call}
+
+\begin{callself}{b}{Coalition and Scheduling}{}
+\end{callself}
+
+\begin{call}{b}{Set\_point()}{d}{ACK}
+\end{call}{ACK}
+
+\begin{call}{b}{Reschedule()}{b}{}
+\end{call}
+
+\begin{call}{d}{Metering Data}{b}{}
+\end{call}
+
+\begin{call}{b}{Reschedule()}{b}{}
+\end{call}
+
+\end{sequencediagram}
+\end{figure}
+
+
+Using method in Uslar et. al\cite{uslar2014security}, the following mapping is obtained:
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=2.25em, text badly centered, node distance=1.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=1.5cm,
+    minimum height=1em]
+\definecolor{carnationpink}{rgb}{1.0, 0.65, 0.79}
+\begin{figure}[H]
+\caption{High Level Diagram for the Interfaces.}
+ \label{fig:HLdiag}
+\begin{tikzpicture}[scale=0.1, node distance = 3cm, auto]
+	\definecolor{aqua}{rgb}{0.0, 1.0, 1.0}
+	\definecolor{aureolin}{rgb}{0.99, 0.93, 0.0}
+	\definecolor{carnationpink}{rgb}{1.0, 0.65, 0.79}
+    % Place nodes
+   	\node [block, line width=1mm, fill=carnationpink] (PCS) {1 Plant Control System}; 
+    \node [block, fill=aureolin,right of=PCS] (SCADA) {37 Transmission SCADA};
+    \node [block, fill=aqua,right of=SCADA] (IED) {46 Transmission IED};
+    %\node [block, fill=aureolin,below of=IED] (SCADA1) {37 Transmission SCADA};
+    \node [block, fill=aureolin,below of=SCADA] (EMS) {30 Energy Management System};
+    % Draw edges
+    \path [line] (PCS) -- node{U80}(SCADA);
+    \path [line] (SCADA) -- node{U81}(IED);
+    \path [line] (SCADA) -- node{U83}(EMS);
+   	\draw[green,thick,dashed] ($(PCS.north west)+(-0.3,0.6)$)  rectangle ($(SCADA.south east)+(0.5,-0.6)$) node [pos=0]{Interface Category 1};
+   	\draw[blue,thick,dashed] ($(SCADA.north west)+(-0.5,1.0)$)  rectangle ($(IED.south east)+(0.3,-1)$) node [ below left]{Interface Category 3}; 
+   	   	\draw[red,thick,dashed] ($(SCADA.north west)+(-0.3,0.8)$)  rectangle ($(EMS.south east)+(0.8,-0.8)$) node [pos=0]{Interface Category 6}; 
+\end{tikzpicture}
+\end{figure}
+
+
+
+
+
 \subsection{Integration into Security Development Lifecycle}
 An important aspect of usability engineering is that usability must be considered early on in software product development lifecycle. Usability of a product or a system can be measured after its development but cannot be integrated thereafter. To ensure the usability of product is as required, it must be considered early on. Each product has a set of target users and their preferences must be considered before product design. \\
 Microsoft has developed a Security Development Lifecycle\cite{howard2006security}, which we shall use to define where and when to use the usability framework. This lifecycle was developed to produce more secure software, and is step towards security-by-design. The Security Development Lifecycle Process is divided into several phases which are further divided into stages:
@@ -314,6 +391,8 @@ Microsoft has developed a Security Development Lifecycle\cite{howard2006security
 \item Response: Any vulnerabilities found post release will be patched in the response phase. This is largely achieved by updates. Detection of vulnerabilities also help eliminate further vulnerabilities before they are discovered. Usability concerns may be reported, however cannot be improved without large scale replacements incurring high costs. The concerns may be taken into consideration for the next product cycle.
 \end{itemize} 
 
-\section{Conclusion}
-Critical infrastructures like power plants will always be targeted for attacks. Extensive security measures will be needed to protect the power plant from various kinds of attacks. In order to aid the operator in attack scenarios, the system is place should be usable. To assess usability of systems, a usability framework for security was derived. With the use of this framework, it is possible to compare multiple systems and determine if they are usable or not. This was demonstrated by comparing two systems used in authentication mechanisms, a password based system and a fingerprint matching system. It is important to note that this framework can applied subjective to the system and the mechanism. Different systems will have different values for the framework. The framework paves the way to \textit{usable security by design}. 
+
+
+\section{Conclusion and Future Work}
+Extensive security measures will be needed to protect power plants and other critical infrastructures from various kinds of attacks. In order to aid the operator in attack scenarios, the system in place should be usable. To assess usability of systems, a usability framework for security was derived, which helps establish the relation between the target system, in this case, security and usability.  With the use of this framework, it is possible to compare multiple systems and determine if they are usable or not. This was demonstrated by comparing two systems used in authentication mechanisms, a password based system and a fingerprint matching system. It is important to note that this framework can applied subjective to the system and the mechanism. Different systems will have different values for the framework. The framework paves the way to \textit{usable security by design}. Future Work will involve defining detailed metrics with methods or formulae to measure them. Metrics may also be defined to determine the degree of performance of a user under various scenarios.
 

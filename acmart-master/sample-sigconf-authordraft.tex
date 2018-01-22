@@ -3,6 +3,10 @@
 \usepackage{booktabs} % For formal tables
 \usepackage{tabularx}
 \usepackage{makecell}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepgflibrary{arrows}
+\usetikzlibrary{calc}
 
 % Copyright
 %\setcopyright{none}
@@ -16,10 +20,10 @@
 
 
 % DOI
-\acmDOI{10.475/123_4}
+\acmDOI{}
 
 % ISBN
-\acmISBN{123-4567-24-567/08/06}
+\acmISBN{}
 
 %Conference
 \acmConference[e-Energy'18]{ACM e-Energy conference}{July 2018}{Karlsruhe, Germany}
@@ -83,37 +87,35 @@ Automation of systems requires users to be less involved in system control. Duri
 % http://dl.acm.org/ccs.cfm
 % Please copy and paste the code instead of the example below.
 %
-\iffalse
 \begin{CCSXML}
 <ccs2012>
- <concept>
-  <concept_id>10010520.10010553.10010562</concept_id>
-  <concept_desc>Computer systems organization~Embedded systems</concept_desc>
-  <concept_significance>500</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010575.10010755</concept_id>
-  <concept_desc>Computer systems organization~Redundancy</concept_desc>
-  <concept_significance>300</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010553.10010554</concept_id>
-  <concept_desc>Computer systems organization~Robotics</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
- <concept>
-  <concept_id>10003033.10003083.10003095</concept_id>
-  <concept_desc>Networks~Network reliability</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
+<concept>
+<concept_id>10002978.10003029.10011703</concept_id>
+<concept_desc>Security and privacy~Usability in security and privacy</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002978.10002991.10002992</concept_id>
+<concept_desc>Security and privacy~Authentication</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120.10003123.10011760</concept_id>
+<concept_desc>Human-centered computing~Systems and tools for interaction design</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120.10003121.10003122.10010854</concept_id>
+<concept_desc>Human-centered computing~Usability testing</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Computer systems organization~Embedded systems}
-\ccsdesc[300]{Computer systems organization~Redundancy}
-\ccsdesc{Computer systems organization~Robotics}
-\ccsdesc[100]{Networks~Network reliability}
-\fi
+\ccsdesc[500]{Security and privacy~Usability in security and privacy}
+\ccsdesc[300]{Security and privacy~Authentication}
+\ccsdesc[500]{Human-centered computing~Systems and tools for interaction design}
+\ccsdesc[300]{Human-centered computing~Usability testing}
 
 \keywords{Security, Usability, Virtual Power Plants}
 
